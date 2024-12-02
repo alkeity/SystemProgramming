@@ -87,6 +87,7 @@
 			this.lwProcesses.Location = new System.Drawing.Point(0, 0);
 			this.lwProcesses.Name = "lwProcesses";
 			this.lwProcesses.Size = new System.Drawing.Size(532, 292);
+			this.lwProcesses.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.lwProcesses.TabIndex = 2;
 			this.lwProcesses.UseCompatibleStateImageBehavior = false;
 			this.lwProcesses.View = System.Windows.Forms.View.Details;

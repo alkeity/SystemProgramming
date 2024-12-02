@@ -28,7 +28,7 @@ namespace TaskManager
 		{
 			lwProcesses.Items.Clear();
 			List<Process> allProcesses = Process.GetProcesses().Cast<Process>().ToList();
-			allProcesses.Sort( (x, y) => x.ProcessName.CompareTo(y.ProcessName) );
+			//allProcesses.Sort( (x, y) => x.ProcessName.CompareTo(y.ProcessName) );
 			foreach (Process process in allProcesses)
 			{
 				string[] processInfo = {
