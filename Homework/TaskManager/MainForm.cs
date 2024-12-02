@@ -24,9 +24,24 @@ namespace TaskManager
 			hideWhenMinimizedToolStripMenuItem.Checked = Properties.Settings.Default.HideInTaskbar;
 		}
 
+		private void FillProcessList()
+		{
+			lwProcesses.Items.Clear();
+			List<Process> allProcesses = Process.GetProcesses().Cast<Process>().ToList();
+			allProcesses.Sort( (x, y) => x.ProcessName.CompareTo(y.ProcessName) );
+			foreach (Process process in allProcesses)
+			{
+				string[] processInfo = {
+										process.ProcessName, process.Id.ToString(),
+										process.Responding == true ? "Responding" : "Not responding"
+				};
+				lwProcesses.Items.Add(new ListViewItem(processInfo));
+			}
+		}
+
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-
+			FillProcessList();
 		}
 
 		private void MainForm_Resize(object sender, EventArgs e)
@@ -73,6 +88,16 @@ namespace TaskManager
 		private void updateNowToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void btnEndTask_Click(object sender, EventArgs e)
+		{
+			for (int i = 0; i < lwProcesses.SelectedItems.Count; i++)
+			{
+				Process process = Process.GetProcessById(Convert.ToInt32(lwProcesses.SelectedItems[i].SubItems[1].Text));
+				process.Kill();
+			}
+			FillProcessList();
 		}
 	}
 }

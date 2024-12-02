@@ -31,6 +31,10 @@
 			this.components = new System.ComponentModel.Container();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageProcesses = new System.Windows.Forms.TabPage();
+			this.lwProcesses = new System.Windows.Forms.ListView();
+			this.colProcessName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.btnEndTask = new System.Windows.Forms.Button();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,11 +46,9 @@
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.updateNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-			this.dataGridViewProcesses = new System.Windows.Forms.DataGridView();
 			this.tabControl.SuspendLayout();
 			this.tabPageProcesses.SuspendLayout();
 			this.menuStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridViewProcesses)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl
@@ -61,7 +63,7 @@
 			// 
 			// tabPageProcesses
 			// 
-			this.tabPageProcesses.Controls.Add(this.dataGridViewProcesses);
+			this.tabPageProcesses.Controls.Add(this.lwProcesses);
 			this.tabPageProcesses.Controls.Add(this.btnEndTask);
 			this.tabPageProcesses.Location = new System.Drawing.Point(4, 22);
 			this.tabPageProcesses.Name = "tabPageProcesses";
@@ -70,6 +72,39 @@
 			this.tabPageProcesses.TabIndex = 0;
 			this.tabPageProcesses.Text = "Processes";
 			this.tabPageProcesses.UseVisualStyleBackColor = true;
+			// 
+			// lwProcesses
+			// 
+			this.lwProcesses.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lwProcesses.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colProcessName,
+            this.colPID,
+            this.colStatus});
+			this.lwProcesses.FullRowSelect = true;
+			this.lwProcesses.HideSelection = false;
+			this.lwProcesses.Location = new System.Drawing.Point(0, 0);
+			this.lwProcesses.Name = "lwProcesses";
+			this.lwProcesses.Size = new System.Drawing.Size(532, 292);
+			this.lwProcesses.TabIndex = 2;
+			this.lwProcesses.UseCompatibleStateImageBehavior = false;
+			this.lwProcesses.View = System.Windows.Forms.View.Details;
+			// 
+			// colProcessName
+			// 
+			this.colProcessName.Text = "Process Name";
+			this.colProcessName.Width = 200;
+			// 
+			// colPID
+			// 
+			this.colPID.Text = "PID";
+			this.colPID.Width = 100;
+			// 
+			// colStatus
+			// 
+			this.colStatus.Text = "Status";
+			this.colStatus.Width = 100;
 			// 
 			// btnEndTask
 			// 
@@ -80,6 +115,7 @@
 			this.btnEndTask.TabIndex = 1;
 			this.btnEndTask.Text = "End Task";
 			this.btnEndTask.UseVisualStyleBackColor = true;
+			this.btnEndTask.Click += new System.EventHandler(this.btnEndTask_Click);
 			// 
 			// menuStrip
 			// 
@@ -160,18 +196,6 @@
 			this.notifyIcon.Visible = true;
 			this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
 			// 
-			// dataGridViewProcesses
-			// 
-			this.dataGridViewProcesses.AllowUserToOrderColumns = true;
-			this.dataGridViewProcesses.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.dataGridViewProcesses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridViewProcesses.Location = new System.Drawing.Point(0, 0);
-			this.dataGridViewProcesses.Name = "dataGridViewProcesses";
-			this.dataGridViewProcesses.Size = new System.Drawing.Size(532, 289);
-			this.dataGridViewProcesses.TabIndex = 2;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,7 +214,6 @@
 			this.tabPageProcesses.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridViewProcesses)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -211,7 +234,10 @@
 		private System.Windows.Forms.ToolStripMenuItem updateNowToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem hideWhenMinimizedToolStripMenuItem;
 		private System.Windows.Forms.NotifyIcon notifyIcon;
-		private System.Windows.Forms.DataGridView dataGridViewProcesses;
+		private System.Windows.Forms.ListView lwProcesses;
+		private System.Windows.Forms.ColumnHeader colProcessName;
+		private System.Windows.Forms.ColumnHeader colPID;
+		private System.Windows.Forms.ColumnHeader colStatus;
 	}
 }
 
