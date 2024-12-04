@@ -46,6 +46,7 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.selectColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStripMain = new System.Windows.Forms.StatusStrip();
+			this.toolStripProcessAmount = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageProcesses = new System.Windows.Forms.TabPage();
 			this.listViewProcesses = new System.Windows.Forms.ListView();
@@ -53,7 +54,7 @@
 			this.columnProcessName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabPagePerformance = new System.Windows.Forms.TabPage();
 			this.timer = new System.Windows.Forms.Timer(this.components);
-			this.toolStripProcessAmount = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripRefreshRate = new System.Windows.Forms.ToolStripStatusLabel();
 			this.mainMenuStrip.SuspendLayout();
 			this.statusStripMain.SuspendLayout();
 			this.tabControl.SuspendLayout();
@@ -84,8 +85,9 @@
 			// startNewProcessToolStripMenuItem
 			// 
 			this.startNewProcessToolStripMenuItem.Name = "startNewProcessToolStripMenuItem";
-			this.startNewProcessToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.startNewProcessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.startNewProcessToolStripMenuItem.Text = "Start new process";
+			this.startNewProcessToolStripMenuItem.Click += new System.EventHandler(this.startNewProcessToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -179,12 +181,19 @@
 			// statusStripMain
 			// 
 			this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProcessAmount});
+            this.toolStripProcessAmount,
+            this.toolStripRefreshRate});
 			this.statusStripMain.Location = new System.Drawing.Point(0, 314);
 			this.statusStripMain.Name = "statusStripMain";
 			this.statusStripMain.Size = new System.Drawing.Size(437, 22);
 			this.statusStripMain.TabIndex = 1;
 			this.statusStripMain.Text = "statusStrip1";
+			// 
+			// toolStripProcessAmount
+			// 
+			this.toolStripProcessAmount.Name = "toolStripProcessAmount";
+			this.toolStripProcessAmount.Size = new System.Drawing.Size(118, 17);
+			this.toolStripProcessAmount.Text = "toolStripStatusLabel1";
 			// 
 			// tabControl
 			// 
@@ -250,11 +259,11 @@
 			this.timer.Interval = 1000;
 			this.timer.Tick += new System.EventHandler(this.timer_Tick);
 			// 
-			// toolStripProcessAmount
+			// toolStripRefreshRate
 			// 
-			this.toolStripProcessAmount.Name = "toolStripProcessAmount";
-			this.toolStripProcessAmount.Size = new System.Drawing.Size(118, 17);
-			this.toolStripProcessAmount.Text = "toolStripStatusLabel1";
+			this.toolStripRefreshRate.Name = "toolStripRefreshRate";
+			this.toolStripRefreshRate.Size = new System.Drawing.Size(118, 17);
+			this.toolStripRefreshRate.Text = "toolStripStatusLabel1";
 			// 
 			// MainForm
 			// 
@@ -307,6 +316,7 @@
 		private System.Windows.Forms.ColumnHeader columnProcessName;
 		private System.Windows.Forms.ColumnHeader columnPID;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripProcessAmount;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripRefreshRate;
 	}
 }
 

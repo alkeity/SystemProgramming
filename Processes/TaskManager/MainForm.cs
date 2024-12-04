@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace TaskManager
 {
@@ -51,6 +52,7 @@ namespace TaskManager
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
+
 		}
 
 		private void timer_Tick(object sender, EventArgs e)
@@ -59,5 +61,20 @@ namespace TaskManager
 			RemoveProcesses();
 			toolStripProcessAmount.Text = allProcesses.Count.ToString();
 		}
+
+		private void startNewProcessToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RunFileDlg(this.Handle, IntPtr.Zero, "C:\\Windows\\System32\\", null, null, null);
+		}
+
+		[DllImport("shell32.dll", EntryPoint = "#61", CharSet = CharSet.Unicode)]
+		public static extern int RunFileDlg(
+			[In] IntPtr hwnd,
+			[In] IntPtr icon,
+			[In] string path,
+			[In] string title,
+			[In] string prompt,
+			[In] string flags
+			);
 	}
 }

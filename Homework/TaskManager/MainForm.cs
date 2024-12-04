@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -67,6 +68,7 @@ namespace TaskManager
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			FillProcessList();
+			//toolStripRefresh.Text = normalToolStripMenuItem
 		}
 
 		private void MainForm_Resize(object sender, EventArgs e)
@@ -111,10 +113,7 @@ namespace TaskManager
 
 		private void startNewProcessToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using (StartProcessForm startForm = new StartProcessForm(this.TopMost))
-			{
-				startForm.ShowDialog();
-			}
+			RunFileDlg(this.Handle, IntPtr.Zero, "C:\\Windows\\System32\\", null, null, null);
 		}
 
 
@@ -146,7 +145,7 @@ namespace TaskManager
 			highToolStripMenuItem.Checked = true;
 			normalToolStripMenuItem.Checked = lowToolStripMenuItem.Checked = pausedToolStripMenuItem.Checked = false;
 			timerUpdate.Enabled = true;
-			timerUpdate.Interval = 2000;
+			timerUpdate.Interval = 500;
 		}
 
 		private void lowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -154,7 +153,7 @@ namespace TaskManager
 			lowToolStripMenuItem.Checked = true;
 			normalToolStripMenuItem.Checked = highToolStripMenuItem.Checked = pausedToolStripMenuItem.Checked = false;
 			timerUpdate.Enabled = true;
-			timerUpdate.Interval = 500;
+			timerUpdate.Interval = 2000;
 		}
 
 		private void pausedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -163,5 +162,14 @@ namespace TaskManager
 			normalToolStripMenuItem.Checked = lowToolStripMenuItem.Checked = highToolStripMenuItem.Checked = false;
 			timerUpdate.Enabled = false;
 		}
+
+		public static extern int RunFileDlg(
+			[In] IntPtr hwnd,
+			[In] IntPtr icon,
+			[In] string path,
+			[In] string title,
+			[In] string prompt,
+			[In] string flags
+			);
 	}
 }

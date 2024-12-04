@@ -31,11 +31,14 @@
 			this.components = new System.ComponentModel.Container();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageProcesses = new System.Windows.Forms.TabPage();
+			this.statusStripProcesses = new System.Windows.Forms.StatusStrip();
+			this.labelProcessAmount = new System.Windows.Forms.ToolStripStatusLabel();
 			this.lwProcesses = new System.Windows.Forms.ListView();
 			this.colProcessName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.btnEndTask = new System.Windows.Forms.Button();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.startNewProcessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,20 +48,18 @@
 			this.hideWhenMinimizedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.updateNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-			this.statusStripProcesses = new System.Windows.Forms.StatusStrip();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.labelProcessAmount = new System.Windows.Forms.ToolStripStatusLabel();
-			this.timerUpdate = new System.Windows.Forms.Timer(this.components);
 			this.updateSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.highToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pausedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+			this.timerUpdate = new System.Windows.Forms.Timer(this.components);
+			this.toolStripRefresh = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tabControl.SuspendLayout();
 			this.tabPageProcesses.SuspendLayout();
-			this.menuStrip.SuspendLayout();
 			this.statusStripProcesses.SuspendLayout();
+			this.menuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl
@@ -84,6 +85,23 @@
 			this.tabPageProcesses.TabIndex = 0;
 			this.tabPageProcesses.Text = "Processes";
 			this.tabPageProcesses.UseVisualStyleBackColor = true;
+			// 
+			// statusStripProcesses
+			// 
+			this.statusStripProcesses.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.labelProcessAmount,
+            this.toolStripRefresh});
+			this.statusStripProcesses.Location = new System.Drawing.Point(3, 306);
+			this.statusStripProcesses.Name = "statusStripProcesses";
+			this.statusStripProcesses.Size = new System.Drawing.Size(526, 22);
+			this.statusStripProcesses.TabIndex = 3;
+			this.statusStripProcesses.Text = "statusStrip1";
+			// 
+			// labelProcessAmount
+			// 
+			this.labelProcessAmount.Name = "labelProcessAmount";
+			this.labelProcessAmount.Size = new System.Drawing.Size(118, 17);
+			this.labelProcessAmount.Text = "toolStripStatusLabel1";
 			// 
 			// lwProcesses
 			// 
@@ -131,6 +149,15 @@
 			this.btnEndTask.UseVisualStyleBackColor = true;
 			this.btnEndTask.Click += new System.EventHandler(this.btnEndTask_Click);
 			// 
+			// tabPage1
+			// 
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Size = new System.Drawing.Size(532, 331);
+			this.tabPage1.TabIndex = 1;
+			this.tabPage1.Text = "tabPage1";
+			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
 			// menuStrip
 			// 
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -155,14 +182,14 @@
 			// startNewProcessToolStripMenuItem
 			// 
 			this.startNewProcessToolStripMenuItem.Name = "startNewProcessToolStripMenuItem";
-			this.startNewProcessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.startNewProcessToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
 			this.startNewProcessToolStripMenuItem.Text = "Start new process";
 			this.startNewProcessToolStripMenuItem.Click += new System.EventHandler(this.startNewProcessToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -201,46 +228,9 @@
 			// updateNowToolStripMenuItem
 			// 
 			this.updateNowToolStripMenuItem.Name = "updateNowToolStripMenuItem";
-			this.updateNowToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.updateNowToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
 			this.updateNowToolStripMenuItem.Text = "Update now";
 			this.updateNowToolStripMenuItem.Click += new System.EventHandler(this.updateNowToolStripMenuItem_Click);
-			// 
-			// notifyIcon
-			// 
-			this.notifyIcon.Text = "Task Manager";
-			this.notifyIcon.Visible = true;
-			this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
-			// 
-			// statusStripProcesses
-			// 
-			this.statusStripProcesses.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.labelProcessAmount});
-			this.statusStripProcesses.Location = new System.Drawing.Point(3, 306);
-			this.statusStripProcesses.Name = "statusStripProcesses";
-			this.statusStripProcesses.Size = new System.Drawing.Size(526, 22);
-			this.statusStripProcesses.TabIndex = 3;
-			this.statusStripProcesses.Text = "statusStrip1";
-			// 
-			// tabPage1
-			// 
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Size = new System.Drawing.Size(532, 331);
-			this.tabPage1.TabIndex = 1;
-			this.tabPage1.Text = "tabPage1";
-			this.tabPage1.UseVisualStyleBackColor = true;
-			// 
-			// labelProcessAmount
-			// 
-			this.labelProcessAmount.Name = "labelProcessAmount";
-			this.labelProcessAmount.Size = new System.Drawing.Size(118, 17);
-			this.labelProcessAmount.Text = "toolStripStatusLabel1";
-			// 
-			// timerUpdate
-			// 
-			this.timerUpdate.Enabled = true;
-			this.timerUpdate.Interval = 1000;
-			this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
 			// 
 			// updateSpeedToolStripMenuItem
 			// 
@@ -250,14 +240,14 @@
             this.lowToolStripMenuItem,
             this.pausedToolStripMenuItem});
 			this.updateSpeedToolStripMenuItem.Name = "updateSpeedToolStripMenuItem";
-			this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
 			this.updateSpeedToolStripMenuItem.Text = "Update speed";
 			// 
 			// highToolStripMenuItem
 			// 
 			this.highToolStripMenuItem.CheckOnClick = true;
 			this.highToolStripMenuItem.Name = "highToolStripMenuItem";
-			this.highToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.highToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
 			this.highToolStripMenuItem.Text = "High";
 			this.highToolStripMenuItem.Click += new System.EventHandler(this.highToolStripMenuItem_Click);
 			// 
@@ -267,7 +257,7 @@
 			this.normalToolStripMenuItem.CheckOnClick = true;
 			this.normalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
-			this.normalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.normalToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
 			this.normalToolStripMenuItem.Text = "Normal";
 			this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
 			// 
@@ -275,7 +265,7 @@
 			// 
 			this.lowToolStripMenuItem.CheckOnClick = true;
 			this.lowToolStripMenuItem.Name = "lowToolStripMenuItem";
-			this.lowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.lowToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
 			this.lowToolStripMenuItem.Text = "Low";
 			this.lowToolStripMenuItem.Click += new System.EventHandler(this.lowToolStripMenuItem_Click);
 			// 
@@ -283,9 +273,27 @@
 			// 
 			this.pausedToolStripMenuItem.CheckOnClick = true;
 			this.pausedToolStripMenuItem.Name = "pausedToolStripMenuItem";
-			this.pausedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.pausedToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
 			this.pausedToolStripMenuItem.Text = "Paused";
 			this.pausedToolStripMenuItem.Click += new System.EventHandler(this.pausedToolStripMenuItem_Click);
+			// 
+			// notifyIcon
+			// 
+			this.notifyIcon.Text = "Task Manager";
+			this.notifyIcon.Visible = true;
+			this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
+			// 
+			// timerUpdate
+			// 
+			this.timerUpdate.Enabled = true;
+			this.timerUpdate.Interval = 1000;
+			this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
+			// 
+			// toolStripRefresh
+			// 
+			this.toolStripRefresh.Name = "toolStripRefresh";
+			this.toolStripRefresh.Size = new System.Drawing.Size(118, 17);
+			this.toolStripRefresh.Text = "toolStripStatusLabel1";
 			// 
 			// MainForm
 			// 
@@ -304,10 +312,10 @@
 			this.tabControl.ResumeLayout(false);
 			this.tabPageProcesses.ResumeLayout(false);
 			this.tabPageProcesses.PerformLayout();
-			this.menuStrip.ResumeLayout(false);
-			this.menuStrip.PerformLayout();
 			this.statusStripProcesses.ResumeLayout(false);
 			this.statusStripProcesses.PerformLayout();
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -341,6 +349,7 @@
 		private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem lowToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem pausedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripRefresh;
 	}
 }
 
