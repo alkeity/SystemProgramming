@@ -24,19 +24,44 @@ namespace TaskManager
 			hideWhenMinimizedToolStripMenuItem.Checked = Properties.Settings.Default.HideInTaskbar;
 		}
 
-		private void FillProcessList()
+		private void AddProcesses(Dictionary<int, Process> processes)
 		{
-			lwProcesses.Items.Clear();
-			List<Process> allProcesses = Process.GetProcesses().Cast<Process>().ToList();
-			//allProcesses.Sort( (x, y) => x.ProcessName.CompareTo(y.ProcessName) );
-			foreach (Process process in allProcesses)
+			foreach (Process process in processes.Values)
 			{
-				string[] processInfo = {
+				if (!lwProcesses.Items.ContainsKey(process.Id.ToString()))
+				{
+					string[] processInfo = {
 										process.ProcessName, process.Id.ToString(),
 										process.Responding == true ? "Responding" : "Not responding"
 				};
-				lwProcesses.Items.Add(new ListViewItem(processInfo));
+					ListViewItem item = new ListViewItem(processInfo);
+					item.Name = process.Id.ToString();
+					lwProcesses.Items.Add(item);
+				}
 			}
+		}
+
+		private	void RemoveProcesses(Dictionary<int, Process> processes)
+		{
+			foreach (ListViewItem item in lwProcesses.Items)
+			{
+				if (!processes.ContainsKey(Convert.ToInt32(item.Name))) { lwProcesses.Items.Remove(item); }
+			}
+		}
+
+		private void FillProcessList()
+		{
+			Dictionary<int, Process> processes = Process.GetProcesses().ToDictionary(x => x.Id);
+			AddProcesses(processes);
+			labelProcessAmount.Text = processes.Count.ToString();
+		}
+
+		private void UpdateProcessList()
+		{
+			Dictionary<int, Process> processes = Process.GetProcesses().ToDictionary(x => x.Id);
+			AddProcesses(processes);
+			RemoveProcesses(processes);
+			labelProcessAmount.Text = processes.Count.ToString();
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
@@ -57,6 +82,11 @@ namespace TaskManager
 		{
 			this.WindowState = FormWindowState.Normal;
 			this.Show();
+		}
+
+		private void timerUpdate_Tick(object sender, EventArgs e)
+		{
+			UpdateProcessList();
 		}
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,13 +111,16 @@ namespace TaskManager
 
 		private void startNewProcessToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			using (StartProcessForm startForm = new StartProcessForm(this.TopMost))
+			{
+				startForm.ShowDialog();
+			}
 		}
 
 
 		private void updateNowToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			UpdateProcessList();
 		}
 
 		private void btnEndTask_Click(object sender, EventArgs e)
@@ -98,6 +131,37 @@ namespace TaskManager
 				process.Kill();
 			}
 			FillProcessList();
+		}
+
+		private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			normalToolStripMenuItem.Checked = true;
+			highToolStripMenuItem.Checked = lowToolStripMenuItem.Checked = pausedToolStripMenuItem.Checked = false;
+			timerUpdate.Enabled = true;
+			timerUpdate.Interval = 1000;
+		}
+
+		private void highToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			highToolStripMenuItem.Checked = true;
+			normalToolStripMenuItem.Checked = lowToolStripMenuItem.Checked = pausedToolStripMenuItem.Checked = false;
+			timerUpdate.Enabled = true;
+			timerUpdate.Interval = 2000;
+		}
+
+		private void lowToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			lowToolStripMenuItem.Checked = true;
+			normalToolStripMenuItem.Checked = highToolStripMenuItem.Checked = pausedToolStripMenuItem.Checked = false;
+			timerUpdate.Enabled = true;
+			timerUpdate.Interval = 500;
+		}
+
+		private void pausedToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			pausedToolStripMenuItem.Checked = true;
+			normalToolStripMenuItem.Checked = lowToolStripMenuItem.Checked = highToolStripMenuItem.Checked = false;
+			timerUpdate.Enabled = false;
 		}
 	}
 }
