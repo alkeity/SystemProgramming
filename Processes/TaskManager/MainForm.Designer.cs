@@ -55,10 +55,14 @@
 			this.tabPagePerformance = new System.Windows.Forms.TabPage();
 			this.timer = new System.Windows.Forms.Timer(this.components);
 			this.toolStripRefreshRate = new System.Windows.Forms.ToolStripStatusLabel();
+			this.contextMenuProcList = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.openSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.endTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mainMenuStrip.SuspendLayout();
 			this.statusStripMain.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageProcesses.SuspendLayout();
+			this.contextMenuProcList.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mainMenuStrip
@@ -92,12 +96,12 @@
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(163, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			// 
 			// optionsToolStripMenuItem
@@ -225,6 +229,7 @@
 			this.listViewProcesses.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnPID,
             this.columnProcessName});
+			this.listViewProcesses.ContextMenuStrip = this.contextMenuProcList;
 			this.listViewProcesses.FullRowSelect = true;
 			this.listViewProcesses.HideSelection = false;
 			this.listViewProcesses.Location = new System.Drawing.Point(1, 1);
@@ -265,6 +270,29 @@
 			this.toolStripRefreshRate.Size = new System.Drawing.Size(118, 17);
 			this.toolStripRefreshRate.Text = "toolStripStatusLabel1";
 			// 
+			// contextMenuProcList
+			// 
+			this.contextMenuProcList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openSourceToolStripMenuItem,
+            this.endTaskToolStripMenuItem});
+			this.contextMenuProcList.Name = "contextMenuProcList";
+			this.contextMenuProcList.Size = new System.Drawing.Size(181, 70);
+			this.contextMenuProcList.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuProcList_Opening);
+			// 
+			// openSourceToolStripMenuItem
+			// 
+			this.openSourceToolStripMenuItem.Name = "openSourceToolStripMenuItem";
+			this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.openSourceToolStripMenuItem.Text = "Open source";
+			this.openSourceToolStripMenuItem.Click += new System.EventHandler(this.openSourceToolStripMenuItem_Click);
+			// 
+			// endTaskToolStripMenuItem
+			// 
+			this.endTaskToolStripMenuItem.Name = "endTaskToolStripMenuItem";
+			this.endTaskToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.endTaskToolStripMenuItem.Text = "End task";
+			this.endTaskToolStripMenuItem.Click += new System.EventHandler(this.endTaskToolStripMenuItem_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,6 +312,7 @@
 			this.statusStripMain.PerformLayout();
 			this.tabControl.ResumeLayout(false);
 			this.tabPageProcesses.ResumeLayout(false);
+			this.contextMenuProcList.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -317,6 +346,9 @@
 		private System.Windows.Forms.ColumnHeader columnPID;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripProcessAmount;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripRefreshRate;
+		private System.Windows.Forms.ContextMenuStrip contextMenuProcList;
+		private System.Windows.Forms.ToolStripMenuItem openSourceToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem endTaskToolStripMenuItem;
 	}
 }
 

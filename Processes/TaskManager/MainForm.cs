@@ -67,6 +67,32 @@ namespace TaskManager
 			RunFileDlg(this.Handle, IntPtr.Zero, "C:\\Windows\\System32\\", null, null, null);
 		}
 
+		private void contextMenuProcList_Opening(object sender, CancelEventArgs e)
+		{
+			openSourceToolStripMenuItem.Enabled = listViewProcesses.SelectedItems.Count > 0 ? true : false;
+			endTaskToolStripMenuItem.Enabled = listViewProcesses.SelectedItems.Count > 0 ? true : false;
+		}
+
+		private void endTaskToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			for (int i = 0; i < listViewProcesses.SelectedItems.Count; i++)
+			{
+				Process process = Process.GetProcessById(Convert.ToInt32(listViewProcesses.SelectedItems[i].Name));
+				process.Kill();
+			}
+		}
+
+		private void openSourceToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (listViewProcesses.SelectedItems.Count > 0)
+			{
+				string procPath = Process.GetProcessById(Convert.ToInt32(listViewProcesses.SelectedItems[0].Name)).MainModule.FileName;
+				//procPath = procPath.Remove(procPath.LastIndexOf('\\'));
+				//Process.Start("explorer", procPath.Remove(procPath.LastIndexOf('\\'));
+				Process.Start(new ProcessStartInfo("explorer.exe", $"/select, \"{procPath}\""));
+			}
+		}
+
 		[DllImport("shell32.dll", EntryPoint = "#61", CharSet = CharSet.Unicode)]
 		public static extern int RunFileDlg(
 			[In] IntPtr hwnd,
