@@ -15,6 +15,7 @@ namespace TaskManager
 {
 	public partial class MainForm : Form
 	{
+		ListViewColumnSorter lvColumnSorter;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -23,6 +24,9 @@ namespace TaskManager
 			topmostToolStripMenuItem.Checked = Properties.Settings.Default.Topmost;
 			this.TopMost = topmostToolStripMenuItem.Checked;
 			hideWhenMinimizedToolStripMenuItem.Checked = Properties.Settings.Default.HideInTaskbar;
+
+			lvColumnSorter = new ListViewColumnSorter();
+			lwProcesses.ListViewItemSorter = lvColumnSorter;
 		}
 
 		private void AddProcesses(Dictionary<int, Process> processes)
@@ -65,10 +69,18 @@ namespace TaskManager
 			labelProcessAmount.Text = processes.Count.ToString();
 		}
 
+		private void SetRefreshRateText()
+		{
+			toolStripRefresh.Text = timerUpdate.Interval == 1000 ? "Normal" :
+									timerUpdate.Interval == 500 ? "Fast" :
+									timerUpdate.Interval == 2000 ? "Slow" :
+									"Paused";
+		}
+
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			FillProcessList();
-			//toolStripRefresh.Text = normalToolStripMenuItem
+			SetRefreshRateText();
 		}
 
 		private void MainForm_Resize(object sender, EventArgs e)
@@ -84,11 +96,6 @@ namespace TaskManager
 		{
 			this.WindowState = FormWindowState.Normal;
 			this.Show();
-		}
-
-		private void timerUpdate_Tick(object sender, EventArgs e)
-		{
-			UpdateProcessList();
 		}
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -138,6 +145,7 @@ namespace TaskManager
 			highToolStripMenuItem.Checked = lowToolStripMenuItem.Checked = pausedToolStripMenuItem.Checked = false;
 			timerUpdate.Enabled = true;
 			timerUpdate.Interval = 1000;
+			SetRefreshRateText();
 		}
 
 		private void highToolStripMenuItem_Click(object sender, EventArgs e)
@@ -146,6 +154,7 @@ namespace TaskManager
 			normalToolStripMenuItem.Checked = lowToolStripMenuItem.Checked = pausedToolStripMenuItem.Checked = false;
 			timerUpdate.Enabled = true;
 			timerUpdate.Interval = 500;
+			SetRefreshRateText();
 		}
 
 		private void lowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -154,6 +163,7 @@ namespace TaskManager
 			normalToolStripMenuItem.Checked = highToolStripMenuItem.Checked = pausedToolStripMenuItem.Checked = false;
 			timerUpdate.Enabled = true;
 			timerUpdate.Interval = 2000;
+			SetRefreshRateText();
 		}
 
 		private void pausedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -161,8 +171,29 @@ namespace TaskManager
 			pausedToolStripMenuItem.Checked = true;
 			normalToolStripMenuItem.Checked = lowToolStripMenuItem.Checked = highToolStripMenuItem.Checked = false;
 			timerUpdate.Enabled = false;
+			SetRefreshRateText();
 		}
 
+		private void timerUpdate_Tick(object sender, EventArgs e)
+		{
+			UpdateProcessList();
+		}
+
+		private void lwProcesses_ColumnClick(object sender, ColumnClickEventArgs e)
+		{
+			if (e.Column == lvColumnSorter.SortColumn)
+			{
+				lvColumnSorter.Order = lvColumnSorter.Order == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
+			}
+			else
+			{
+				lvColumnSorter.SortColumn = e.Column;
+				lvColumnSorter.Order = SortOrder.Ascending;
+			}
+			lwProcesses.Sort();
+		}
+
+		[DllImport("shell32.dll", EntryPoint = "#61", CharSet = CharSet.Unicode)]
 		public static extern int RunFileDlg(
 			[In] IntPtr hwnd,
 			[In] IntPtr icon,

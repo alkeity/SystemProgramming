@@ -33,6 +33,7 @@
 			this.tabPageProcesses = new System.Windows.Forms.TabPage();
 			this.statusStripProcesses = new System.Windows.Forms.StatusStrip();
 			this.labelProcessAmount = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripRefresh = new System.Windows.Forms.ToolStripStatusLabel();
 			this.lwProcesses = new System.Windows.Forms.ListView();
 			this.colProcessName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -55,7 +56,6 @@
 			this.pausedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.timerUpdate = new System.Windows.Forms.Timer(this.components);
-			this.toolStripRefresh = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tabControl.SuspendLayout();
 			this.tabPageProcesses.SuspendLayout();
 			this.statusStripProcesses.SuspendLayout();
@@ -103,6 +103,12 @@
 			this.labelProcessAmount.Size = new System.Drawing.Size(118, 17);
 			this.labelProcessAmount.Text = "toolStripStatusLabel1";
 			// 
+			// toolStripRefresh
+			// 
+			this.toolStripRefresh.Name = "toolStripRefresh";
+			this.toolStripRefresh.Size = new System.Drawing.Size(118, 17);
+			this.toolStripRefresh.Text = "toolStripStatusLabel1";
+			// 
 			// lwProcesses
 			// 
 			this.lwProcesses.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -118,10 +124,10 @@
 			this.lwProcesses.MultiSelect = false;
 			this.lwProcesses.Name = "lwProcesses";
 			this.lwProcesses.Size = new System.Drawing.Size(532, 268);
-			this.lwProcesses.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.lwProcesses.TabIndex = 2;
 			this.lwProcesses.UseCompatibleStateImageBehavior = false;
 			this.lwProcesses.View = System.Windows.Forms.View.Details;
+			this.lwProcesses.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lwProcesses_ColumnClick);
 			// 
 			// colProcessName
 			// 
@@ -288,12 +294,6 @@
 			this.timerUpdate.Enabled = true;
 			this.timerUpdate.Interval = 1000;
 			this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
-			// 
-			// toolStripRefresh
-			// 
-			this.toolStripRefresh.Name = "toolStripRefresh";
-			this.toolStripRefresh.Size = new System.Drawing.Size(118, 17);
-			this.toolStripRefresh.Text = "toolStripStatusLabel1";
 			// 
 			// MainForm
 			// 
