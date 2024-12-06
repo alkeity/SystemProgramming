@@ -26,14 +26,14 @@ namespace TaskManager
 			hideWhenMinimizedToolStripMenuItem.Checked = Properties.Settings.Default.HideInTaskbar;
 
 			lvColumnSorter = new ListViewColumnSorter();
-			lwProcesses.ListViewItemSorter = lvColumnSorter;
+			lvProcesses.ListViewItemSorter = lvColumnSorter;
 		}
 
 		private void AddProcesses(Dictionary<int, Process> processes)
 		{
 			foreach (Process process in processes.Values)
 			{
-				if (!lwProcesses.Items.ContainsKey(process.Id.ToString()))
+				if (!lvProcesses.Items.ContainsKey(process.Id.ToString()))
 				{
 					string[] processInfo = {
 										process.ProcessName, process.Id.ToString(),
@@ -41,16 +41,16 @@ namespace TaskManager
 				};
 					ListViewItem item = new ListViewItem(processInfo);
 					item.Name = process.Id.ToString();
-					lwProcesses.Items.Add(item);
+					lvProcesses.Items.Add(item);
 				}
 			}
 		}
 
 		private	void RemoveProcesses(Dictionary<int, Process> processes)
 		{
-			foreach (ListViewItem item in lwProcesses.Items)
+			foreach (ListViewItem item in lvProcesses.Items)
 			{
-				if (!processes.ContainsKey(Convert.ToInt32(item.Name))) { lwProcesses.Items.Remove(item); }
+				if (!processes.ContainsKey(Convert.ToInt32(item.Name))) { lvProcesses.Items.Remove(item); }
 			}
 		}
 
@@ -81,6 +81,10 @@ namespace TaskManager
 		{
 			FillProcessList();
 			SetRefreshRateText();
+			foreach (ColumnHeader ch in lvProcesses.Columns)
+			{
+				ch.Width = -2;
+			}
 		}
 
 		private void MainForm_Resize(object sender, EventArgs e)
@@ -131,9 +135,9 @@ namespace TaskManager
 
 		private void btnEndTask_Click(object sender, EventArgs e)
 		{
-			for (int i = 0; i < lwProcesses.SelectedItems.Count; i++)
+			for (int i = 0; i < lvProcesses.SelectedItems.Count; i++)
 			{
-				Process process = Process.GetProcessById(Convert.ToInt32(lwProcesses.SelectedItems[i].SubItems[1].Text));
+				Process process = Process.GetProcessById(Convert.ToInt32(lvProcesses.SelectedItems[i].SubItems[1].Text));
 				process.Kill();
 			}
 			FillProcessList();
@@ -190,7 +194,25 @@ namespace TaskManager
 				lvColumnSorter.SortColumn = e.Column;
 				lvColumnSorter.Order = SortOrder.Ascending;
 			}
-			lwProcesses.Sort();
+			lvProcesses.Sort();
+		}
+
+		private void endTaskToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			for (int i = 0; i < lvProcesses.SelectedItems.Count; i++)
+			{
+				Process process = Process.GetProcessById(Convert.ToInt32(lvProcesses.SelectedItems[i].Name));
+				process.Kill();
+			}
+		}
+
+		private void openFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (lvProcesses.SelectedItems.Count > 0)
+			{
+				string procPath = Process.GetProcessById(Convert.ToInt32(lvProcesses.SelectedItems[0].Name)).MainModule.FileName;
+				Process.Start(new ProcessStartInfo("explorer.exe", $"/select, \"{procPath}\""));
+			}
 		}
 
 		[DllImport("shell32.dll", EntryPoint = "#61", CharSet = CharSet.Unicode)]
