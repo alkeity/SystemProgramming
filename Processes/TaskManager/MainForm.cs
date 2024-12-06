@@ -35,8 +35,8 @@ namespace TaskManager
 			{
 				if (!listViewProcesses.Items.ContainsKey(process.Id.ToString()))
 				{
-					ListViewItem item = new ListViewItem(new string[] { process.Id.ToString(), process.ProcessName });
-					item.Name = item.Text = process.Id.ToString();
+					ListViewItem item = new ListViewItem(new string[] { process.ProcessName, process.Id.ToString() });
+					item.Name = process.Id.ToString();
 					listViewProcesses.Items.Add(item);
 				}
 			}
