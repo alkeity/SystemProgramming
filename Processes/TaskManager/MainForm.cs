@@ -15,10 +15,13 @@ namespace TaskManager
 	public partial class MainForm : Form
 	{
 		Dictionary<int, Process> allProcesses;
+		ListViewColumnSorter columnSorter;
 
 		public MainForm()
 		{
 			InitializeComponent();
+			columnSorter = new ListViewColumnSorter();
+			listViewProcesses.ListViewItemSorter = columnSorter;
 			LoadProcesses();
 		}
 
@@ -52,7 +55,10 @@ namespace TaskManager
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-
+			foreach (ColumnHeader ch in listViewProcesses.Columns)
+			{
+				ch.Width = -2;
+			}
 		}
 
 		private void timer_Tick(object sender, EventArgs e)
@@ -87,8 +93,6 @@ namespace TaskManager
 			if (listViewProcesses.SelectedItems.Count > 0)
 			{
 				string procPath = Process.GetProcessById(Convert.ToInt32(listViewProcesses.SelectedItems[0].Name)).MainModule.FileName;
-				//procPath = procPath.Remove(procPath.LastIndexOf('\\'));
-				//Process.Start("explorer", procPath.Remove(procPath.LastIndexOf('\\'));
 				Process.Start(new ProcessStartInfo("explorer.exe", $"/select, \"{procPath}\""));
 			}
 		}
@@ -102,5 +106,19 @@ namespace TaskManager
 			[In] string prompt,
 			[In] string flags
 			);
+
+		private void listViewProcesses_ColumnClick(object sender, ColumnClickEventArgs e)
+		{
+			if (e.Column == columnSorter.SortColumn)
+			{
+				columnSorter.Order = columnSorter.Order == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
+			}
+			else
+			{
+				columnSorter.SortColumn = e.Column;
+				columnSorter.Order = SortOrder.Ascending;
+			}
+			listViewProcesses.Sort();
+		}
 	}
 }

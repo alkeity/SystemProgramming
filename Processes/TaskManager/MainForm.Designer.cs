@@ -246,15 +246,17 @@
 			this.listViewProcesses.TabIndex = 0;
 			this.listViewProcesses.UseCompatibleStateImageBehavior = false;
 			this.listViewProcesses.View = System.Windows.Forms.View.Details;
+			this.listViewProcesses.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewProcesses_ColumnClick);
 			// 
 			// columnPID
 			// 
 			this.columnPID.Text = "PID";
+			this.columnPID.Width = 0;
 			// 
 			// columnProcessName
 			// 
 			this.columnProcessName.Text = "Process name";
-			this.columnProcessName.Width = 120;
+			this.columnProcessName.Width = 0;
 			// 
 			// contextMenuProcList
 			// 
