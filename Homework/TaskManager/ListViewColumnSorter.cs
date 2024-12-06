@@ -39,12 +39,12 @@ namespace TaskManager
 			ListViewItem itemX = (ListViewItem)x;
 			ListViewItem itemY = (ListViewItem)y;
 
-			if (int.TryParse(itemX.SubItems[sortColumn].Text, out _))
+			if (double.TryParse(itemX.SubItems[sortColumn].Text, out _))
 			{
 				result = caseInsensitiveComparer.Compare
 					(
-						Convert.ToInt32(itemX.SubItems[sortColumn].Text),
-						Convert.ToInt32(itemY.SubItems[sortColumn].Text)
+						Convert.ToDouble(itemX.SubItems[sortColumn].Text),
+						Convert.ToDouble(itemY.SubItems[sortColumn].Text)
 					);
 			}
 			else
