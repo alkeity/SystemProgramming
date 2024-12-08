@@ -27,6 +27,7 @@ namespace TaskManager
 
 			lvColumnSorter = new ListViewColumnSorter();
 			lvProcesses.ListViewItemSorter = lvColumnSorter;
+			lvProcesses.HeaderContextMenu = contextMenuColumns;
 		}
 
 		private void AddProcesses(Dictionary<int, Process> processes)
@@ -213,6 +214,16 @@ namespace TaskManager
 				string procPath = Process.GetProcessById(Convert.ToInt32(lvProcesses.SelectedItems[0].Name)).MainModule.FileName;
 				Process.Start(new ProcessStartInfo("explorer.exe", $"/select, \"{procPath}\""));
 			}
+		}
+
+		private void pIDToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void statusToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
 		}
 
 		[DllImport("shell32.dll", EntryPoint = "#61", CharSet = CharSet.Unicode)]
