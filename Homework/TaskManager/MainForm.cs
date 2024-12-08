@@ -27,7 +27,9 @@ namespace TaskManager
 
 			lvColumnSorter = new ListViewColumnSorter();
 			lvProcesses.ListViewItemSorter = lvColumnSorter;
-			lvProcesses.HeaderContextMenu = contextMenuColumns;
+
+			pIDToolStripMenuItem.Checked = true;
+			statusToolStripMenuItem.Checked = true;
 		}
 
 		private void AddProcesses(Dictionary<int, Process> processes)
@@ -78,14 +80,19 @@ namespace TaskManager
 									"Paused";
 		}
 
-		private void MainForm_Load(object sender, EventArgs e)
+		private void SetColumnsAutosize()
 		{
-			FillProcessList();
-			SetRefreshRateText();
 			foreach (ColumnHeader ch in lvProcesses.Columns)
 			{
 				ch.Width = -2;
 			}
+		}
+
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+			FillProcessList();
+			SetRefreshRateText();
+			SetColumnsAutosize();
 		}
 
 		private void MainForm_Resize(object sender, EventArgs e)
@@ -218,12 +225,14 @@ namespace TaskManager
 
 		private void pIDToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			if (pIDToolStripMenuItem.Checked) lvProcesses.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+			else lvProcesses.Columns[1].Width = 0;
 		}
 
 		private void statusToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			if (statusToolStripMenuItem.Checked) lvProcesses.Columns[2].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+			else lvProcesses.Columns[2].Width = 0;
 		}
 
 		[DllImport("shell32.dll", EntryPoint = "#61", CharSet = CharSet.Unicode)]

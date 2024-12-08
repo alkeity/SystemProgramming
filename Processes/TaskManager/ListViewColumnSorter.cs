@@ -55,7 +55,7 @@ namespace TaskManager
 
 			if (sortOrder == SortOrder.Ascending) return result;
 			else if (sortOrder == SortOrder.Descending) return (-result);
-			else return 0;
+			return 0;
 		}
 	}
 }

@@ -123,19 +123,19 @@
             this.openFileLocationToolStripMenuItem,
             this.endTaskToolStripMenuItem});
 			this.contextMenuProcessList.Name = "contextMenuProcessList";
-			this.contextMenuProcessList.Size = new System.Drawing.Size(181, 70);
+			this.contextMenuProcessList.Size = new System.Drawing.Size(169, 48);
 			// 
 			// openFileLocationToolStripMenuItem
 			// 
 			this.openFileLocationToolStripMenuItem.Name = "openFileLocationToolStripMenuItem";
-			this.openFileLocationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.openFileLocationToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
 			this.openFileLocationToolStripMenuItem.Text = "Open file location";
 			this.openFileLocationToolStripMenuItem.Click += new System.EventHandler(this.openFileLocationToolStripMenuItem_Click);
 			// 
 			// endTaskToolStripMenuItem
 			// 
 			this.endTaskToolStripMenuItem.Name = "endTaskToolStripMenuItem";
-			this.endTaskToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.endTaskToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
 			this.endTaskToolStripMenuItem.Text = "End task";
 			this.endTaskToolStripMenuItem.Click += new System.EventHandler(this.endTaskToolStripMenuItem_Click);
 			// 
@@ -326,7 +326,7 @@
             this.colStatus});
 			this.lvProcesses.ContextMenuStrip = this.contextMenuProcessList;
 			this.lvProcesses.FullRowSelect = true;
-			this.lvProcesses.HeaderContextMenu = null;
+			this.lvProcesses.HeaderContextMenu = this.contextMenuColumns;
 			this.lvProcesses.HideSelection = false;
 			this.lvProcesses.Location = new System.Drawing.Point(0, 0);
 			this.lvProcesses.MultiSelect = false;

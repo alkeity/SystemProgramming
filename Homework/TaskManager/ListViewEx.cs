@@ -21,7 +21,7 @@ namespace TaskManager
 			base.WndProc(ref m);
 			if (m.Msg == 0x7b) // context menu
 			{
-				if (m.WParam != this.Handle) HeaderContextMenu.Show(Control.MousePosition);
+				if (m.WParam != this.Handle && HeaderContextMenu != null) HeaderContextMenu.Show(Control.MousePosition);
 			}
 		}
 	}
