@@ -37,6 +37,9 @@
 			this.contextMenuProcessList = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.openFileLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.endTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenuColumns = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.pIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.btnEndTask = new System.Windows.Forms.Button();
 			this.tabPagePerformance = new System.Windows.Forms.TabPage();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -55,19 +58,20 @@
 			this.pausedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.timerUpdate = new System.Windows.Forms.Timer(this.components);
-			this.contextMenuColumns = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.pIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.userToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lvProcesses = new TaskManager.ListViewEx();
 			this.colProcessName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colOwner = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabControl.SuspendLayout();
 			this.tabPageProcesses.SuspendLayout();
 			this.statusStripProcesses.SuspendLayout();
 			this.contextMenuProcessList.SuspendLayout();
-			this.menuStrip.SuspendLayout();
 			this.contextMenuColumns.SuspendLayout();
+			this.menuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl
@@ -138,6 +142,38 @@
 			this.endTaskToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
 			this.endTaskToolStripMenuItem.Text = "End task";
 			this.endTaskToolStripMenuItem.Click += new System.EventHandler(this.endTaskToolStripMenuItem_Click);
+			// 
+			// contextMenuColumns
+			// 
+			this.contextMenuColumns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pIDToolStripMenuItem,
+            this.statusToolStripMenuItem,
+            this.userToolStripMenuItem,
+            this.pathToolStripMenuItem});
+			this.contextMenuColumns.Name = "contextMenuColumns";
+			this.contextMenuColumns.Size = new System.Drawing.Size(110, 92);
+			// 
+			// pIDToolStripMenuItem
+			// 
+			this.pIDToolStripMenuItem.Checked = true;
+			this.pIDToolStripMenuItem.CheckOnClick = true;
+			this.pIDToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.pIDToolStripMenuItem.Name = "pIDToolStripMenuItem";
+			this.pIDToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+			this.pIDToolStripMenuItem.Tag = "1";
+			this.pIDToolStripMenuItem.Text = "PID";
+			this.pIDToolStripMenuItem.Click += new System.EventHandler(this.ContextMenuColumnsItemClick);
+			// 
+			// statusToolStripMenuItem
+			// 
+			this.statusToolStripMenuItem.Checked = true;
+			this.statusToolStripMenuItem.CheckOnClick = true;
+			this.statusToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
+			this.statusToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+			this.statusToolStripMenuItem.Tag = "2";
+			this.statusToolStripMenuItem.Text = "Status";
+			this.statusToolStripMenuItem.Click += new System.EventHandler(this.ContextMenuColumnsItemClick);
 			// 
 			// btnEndTask
 			// 
@@ -290,29 +326,27 @@
 			this.timerUpdate.Interval = 1000;
 			this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
 			// 
-			// contextMenuColumns
+			// userToolStripMenuItem
 			// 
-			this.contextMenuColumns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pIDToolStripMenuItem,
-            this.statusToolStripMenuItem});
-			this.contextMenuColumns.Name = "contextMenuColumns";
-			this.contextMenuColumns.Size = new System.Drawing.Size(107, 48);
+			this.userToolStripMenuItem.Checked = true;
+			this.userToolStripMenuItem.CheckOnClick = true;
+			this.userToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.userToolStripMenuItem.Name = "userToolStripMenuItem";
+			this.userToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+			this.userToolStripMenuItem.Tag = "3";
+			this.userToolStripMenuItem.Text = "Owner";
+			this.userToolStripMenuItem.Click += new System.EventHandler(this.ContextMenuColumnsItemClick);
 			// 
-			// pIDToolStripMenuItem
+			// pathToolStripMenuItem
 			// 
-			this.pIDToolStripMenuItem.CheckOnClick = true;
-			this.pIDToolStripMenuItem.Name = "pIDToolStripMenuItem";
-			this.pIDToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
-			this.pIDToolStripMenuItem.Text = "PID";
-			this.pIDToolStripMenuItem.Click += new System.EventHandler(this.pIDToolStripMenuItem_Click);
-			// 
-			// statusToolStripMenuItem
-			// 
-			this.statusToolStripMenuItem.CheckOnClick = true;
-			this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
-			this.statusToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
-			this.statusToolStripMenuItem.Text = "Status";
-			this.statusToolStripMenuItem.Click += new System.EventHandler(this.statusToolStripMenuItem_Click);
+			this.pathToolStripMenuItem.Checked = true;
+			this.pathToolStripMenuItem.CheckOnClick = true;
+			this.pathToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.pathToolStripMenuItem.Name = "pathToolStripMenuItem";
+			this.pathToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+			this.pathToolStripMenuItem.Tag = "4";
+			this.pathToolStripMenuItem.Text = "Path";
+			this.pathToolStripMenuItem.Click += new System.EventHandler(this.ContextMenuColumnsItemClick);
 			// 
 			// lvProcesses
 			// 
@@ -323,7 +357,9 @@
 			this.lvProcesses.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colProcessName,
             this.colPID,
-            this.colStatus});
+            this.colStatus,
+            this.colOwner,
+            this.colPath});
 			this.lvProcesses.ContextMenuStrip = this.contextMenuProcessList;
 			this.lvProcesses.FullRowSelect = true;
 			this.lvProcesses.HeaderContextMenu = this.contextMenuColumns;
@@ -336,6 +372,7 @@
 			this.lvProcesses.UseCompatibleStateImageBehavior = false;
 			this.lvProcesses.View = System.Windows.Forms.View.Details;
 			this.lvProcesses.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lwProcesses_ColumnClick);
+			this.lvProcesses.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.lvProcesses_ColumnWidthChanging);
 			// 
 			// colProcessName
 			// 
@@ -351,6 +388,14 @@
 			// 
 			this.colStatus.Text = "Status";
 			this.colStatus.Width = 100;
+			// 
+			// colOwner
+			// 
+			this.colOwner.Text = "Owner";
+			// 
+			// colPath
+			// 
+			this.colPath.Text = "Path";
 			// 
 			// MainForm
 			// 
@@ -372,9 +417,9 @@
 			this.statusStripProcesses.ResumeLayout(false);
 			this.statusStripProcesses.PerformLayout();
 			this.contextMenuProcessList.ResumeLayout(false);
+			this.contextMenuColumns.ResumeLayout(false);
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
-			this.contextMenuColumns.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -416,6 +461,10 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenuColumns;
 		private System.Windows.Forms.ToolStripMenuItem pIDToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem statusToolStripMenuItem;
+		private System.Windows.Forms.ColumnHeader colOwner;
+		private System.Windows.Forms.ColumnHeader colPath;
+		private System.Windows.Forms.ToolStripMenuItem userToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem pathToolStripMenuItem;
 	}
 }
 

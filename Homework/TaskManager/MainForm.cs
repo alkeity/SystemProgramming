@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +17,7 @@ namespace TaskManager
 	public partial class MainForm : Form
 	{
 		ListViewColumnSorter lvColumnSorter;
+		HashSet<int> hiddenColumns;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -25,23 +27,27 @@ namespace TaskManager
 			this.TopMost = topmostToolStripMenuItem.Checked;
 			hideWhenMinimizedToolStripMenuItem.Checked = Properties.Settings.Default.HideInTaskbar;
 
+			hiddenColumns = new HashSet<int>();
+
 			lvColumnSorter = new ListViewColumnSorter();
 			lvProcesses.ListViewItemSorter = lvColumnSorter;
-
-			pIDToolStripMenuItem.Checked = true;
-			statusToolStripMenuItem.Checked = true;
 		}
 
 		private void AddProcesses(Dictionary<int, Process> processes)
 		{
+			string path;
 			foreach (Process process in processes.Values)
 			{
 				if (!lvProcesses.Items.ContainsKey(process.Id.ToString()))
 				{
+					try { path = process.MainModule.FileName; }
+					catch (Win32Exception) { path = ""; }
+
 					string[] processInfo = {
 										process.ProcessName, process.Id.ToString(),
-										process.Responding == true ? "Responding" : "Not responding"
-				};
+										process.Responding == true ? "Responding" : "Not responding",
+										GetProcessOwner(process), path
+											};
 					ListViewItem item = new ListViewItem(processInfo);
 					item.Name = process.Id.ToString();
 					lvProcesses.Items.Add(item);
@@ -85,6 +91,42 @@ namespace TaskManager
 			foreach (ColumnHeader ch in lvProcesses.Columns)
 			{
 				ch.Width = -2;
+			}
+		}
+
+		private string GetProcessOwner(Process process)
+		{
+			string username;
+			IntPtr processHandle = IntPtr.Zero;
+			try
+			{
+				OpenProcessToken(process.Handle, 8, out processHandle);
+				using (WindowsIdentity wi = new WindowsIdentity(processHandle))
+				{
+					username = wi.Name.Contains(@"\") ? wi.Name.Substring(wi.Name.IndexOf(@"\") + 1) : wi.Name;
+				}
+			}
+			catch (Win32Exception) { username = ""; }
+			finally
+			{
+				if (processHandle != IntPtr.Zero) CloseHandle(processHandle);
+			}
+			return username;
+		}
+
+		private void ChangeColumnVisibility(int index, bool visible)
+		{
+			if (visible)
+			{
+				lvProcesses.Columns[index].DisplayIndex = index;
+				lvProcesses.Columns[index].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+				hiddenColumns.Remove(index);
+			}
+			else
+			{
+				lvProcesses.Columns[index].DisplayIndex = 0;
+				lvProcesses.Columns[index].Width = 0;
+				hiddenColumns.Add(index);
 			}
 		}
 
@@ -205,6 +247,15 @@ namespace TaskManager
 			lvProcesses.Sort();
 		}
 
+		private void lvProcesses_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+		{
+			if (hiddenColumns.Contains(e.ColumnIndex))
+			{
+				e.Cancel = true;
+				e.NewWidth = 0;
+			}
+		}
+
 		private void endTaskToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			for (int i = 0; i < lvProcesses.SelectedItems.Count; i++)
@@ -223,16 +274,10 @@ namespace TaskManager
 			}
 		}
 
-		private void pIDToolStripMenuItem_Click(object sender, EventArgs e)
+		private void ContextMenuColumnsItemClick(object sender, EventArgs e)
 		{
-			if (pIDToolStripMenuItem.Checked) lvProcesses.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-			else lvProcesses.Columns[1].Width = 0;
-		}
-
-		private void statusToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (statusToolStripMenuItem.Checked) lvProcesses.Columns[2].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-			else lvProcesses.Columns[2].Width = 0;
+			ToolStripMenuItem item = sender as ToolStripMenuItem;
+			ChangeColumnVisibility(Convert.ToInt32(item.Tag), item.Checked);
 		}
 
 		[DllImport("shell32.dll", EntryPoint = "#61", CharSet = CharSet.Unicode)]
@@ -244,5 +289,11 @@ namespace TaskManager
 			[In] string prompt,
 			[In] string flags
 			);
+
+		[DllImport("advapi32.dll", SetLastError = true)]
+		private static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
+		[DllImport("kernel32.dll", SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool CloseHandle(IntPtr hObject);
 	}
 }
